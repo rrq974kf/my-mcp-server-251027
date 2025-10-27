@@ -6,7 +6,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { z } from 'zod' // 스키마 유효성 검사를 위한 Zod 라이브러리
 import { InferenceClient } from '@huggingface/inference' // Hugging Face Inference Client
-
+export default function createServer({ config }) {
 /**
  * MCP 서버 인스턴스 생성
  * - name: 서버 이름
@@ -450,3 +450,6 @@ await server.connect(transport)
 
 // 서버가 성공적으로 시작되었음을 표준 에러 출력으로 알림
 console.error('Greeting MCP Server running on stdio')
+return server.server
+}
+
