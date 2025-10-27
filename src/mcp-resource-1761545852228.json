@@ -1,0 +1,19 @@
+{
+  "name": "Greeting-Server",
+  "version": "1.0.0",
+  "description": "다양한 기능을 제공하는 MCP 서버입니다.",
+  "capabilities": [
+    "tools",
+    "resources"
+  ],
+  "tools": [
+    "greeting",
+    "calculator",
+    "current-time"
+  ],
+  "resources": [
+    "server-info",
+    "help-guide",
+    "timezone-list"
+  ]
+}
