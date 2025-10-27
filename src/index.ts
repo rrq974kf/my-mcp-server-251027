@@ -440,13 +440,6 @@ ${code}
     }
 )
 
-/**
- * 서버를 stdio 트랜스포트에 연결하고 시작
- * - StdioServerTransport: 표준 입출력을 통한 통신 설정
- * - server.connect(): 서버를 트랜스포트에 연결하여 실행
- */
-const transport = new StdioServerTransport()
-await server.connect(transport)
 
 // 서버가 성공적으로 시작되었음을 표준 에러 출력으로 알림
 console.error('Greeting MCP Server running on stdio')
