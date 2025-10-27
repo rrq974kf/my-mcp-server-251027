@@ -1,1 +1,2 @@
-runtime : 'typesceipt'
+runtime: typescript
+entrypoint: src/index.ts
