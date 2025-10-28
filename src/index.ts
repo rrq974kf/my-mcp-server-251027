@@ -6,7 +6,13 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { z } from 'zod' // 스키마 유효성 검사를 위한 Zod 라이브러리
 import { InferenceClient } from '@huggingface/inference' // Hugging Face Inference Client
-export default function createServer({ config }) {
+
+// Smithery configuration schema - HF_TOKEN을 사용자로부터 받음
+export const configSchema = z.object({
+    HF_TOKEN: z.string().describe("Hugging Face API token for image generation")
+})
+
+export default function createServer({ config }: { config: z.infer<typeof configSchema> }) {
 /**
  * MCP 서버 인스턴스 생성
  * - name: 서버 이름
@@ -217,19 +223,19 @@ server.tool(
     async ({ prompt }) => {
         try {
             // Hugging Face API 토큰 확인
-            if (!process.env.HF_TOKEN) {
+            if (!config.HF_TOKEN) {
                 return {
                     content: [
                         {
                             type: 'text',
-                            text: '❌ 오류: HF_TOKEN 환경 변수가 설정되지 않았습니다.'
+                            text: '❌ 오류: HF_TOKEN이 설정되지 않았습니다.'
                         }
                     ]
                 }
             }
 
             // Inference Client 초기화
-            const client = new InferenceClient(process.env.HF_TOKEN)
+            const client = new InferenceClient(config.HF_TOKEN)
 
             // 이미지 생성 (FLUX.1-schnell 모델 사용)
             const imageBlob = await client.textToImage({
